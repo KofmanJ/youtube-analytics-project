@@ -19,9 +19,54 @@ class Channel:
         self.title = channel['snippet']['title']
         self.description = channel['snippet']['description']
         self.url = f"https://www.youtube.com/{channel['snippet']['customUrl']}"
-        self.count_subscribers = channel['statistics']['subscriberCount']
-        self.video_count = channel['statistics']['videoCount']
-        self.count_views = channel['statistics']['viewCount']
+        self.count_subscribers = int(channel['statistics']['subscriberCount'])
+        self.video_count = int(channel['statistics']['videoCount'])
+        self.count_views = int(channel['statistics']['viewCount'])
+
+    def __str__(self):
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """
+        Возвращает общее количество подписчиков
+        """
+        return self.count_subscribers + other.count_subscribers
+
+    def __sub__(self, other):
+        """
+        Возвращает вычтенное количество подписчиков
+        """
+        return self.count_subscribers - other.count_subscribers
+
+    def __gt__(self, other):
+        """
+        Сравнивают количество подписчиков
+        """
+        return self.count_subscribers > other.count_subscribers
+
+    def __ge__(self, other):
+        """
+        Сравнивают количество подписчиков
+        """
+        return self.count_subscribers >= other.count_subscribers
+
+    def __lt__(self, other):
+        """
+        Сравнивают количество подписчиков
+        """
+        return self.count_subscribers < other.count_subscribers
+
+    def __le__(self, other):
+        """
+        Сравнивают количество подписчиков
+        """
+        return self.count_subscribers <= other.count_subscribers
+
+    def __eq__(self, other):
+        """
+        Сравнивают количество подписчиков
+        """
+        return self.count_subscribers == other.count_subscribers
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -37,6 +82,9 @@ class Channel:
         return youtube
 
     def to_json(self, file_name):
+        """
+        Вставляет данные в файл формата json
+        """
         data = {
             "channel_id": self.channel_id,
             "title": self.title,
